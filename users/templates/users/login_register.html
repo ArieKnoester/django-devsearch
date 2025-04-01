@@ -18,16 +18,16 @@
           {% csrf_token %}
           {% for field in form %}
             <div class="form__field">
-              <label for="formInput#text">{{field.label}}: </label>
-              {{field}}
+              <label for="formInput#text">{{ field.label }}: </label>
+              {{ field }}
                 <!-- Display the helper text for fields. Left code here for reference.
                      In this case it makes the form look too cluttered, in my opinion -->
 <!--              {% if field.help_text %}-->
-<!--                <small>{{field.help_text}}</small>-->
+<!--                <small>{{ field.help_text }}</small>-->
 <!--              {% endif %}-->
 
               {% for error in field.errors %}
-                <p style="color: red">{{error}}</p>
+                <p style="color: red">{{ error }}</p>
               {% endfor %}
 
             </div>

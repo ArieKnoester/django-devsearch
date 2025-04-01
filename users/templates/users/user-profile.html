@@ -9,14 +9,14 @@
         <div class="column column--1of3">
           <div class="card text-center">
             <div class="card__body dev">
-              <img class="avatar avatar--xl" src="{{profile.profile_image.url}}" />
-              <h2 class="dev__name">{{profile.name}}</h2>
-              <p class="dev__title">{{profile.short_intro}}</p>
-              <p class="dev__location">Based in {{profile.location}}</p>
+              <img class="avatar avatar--xl" src="{{ profile.profile_image.url }}" />
+              <h2 class="dev__name">{{ profile.name }}</h2>
+              <p class="dev__title">{{ profile.short_intro }}</p>
+              <p class="dev__location">Based in {{ profile.location }}</p>
               <ul class="dev__social">
               {% if profile.social_github %}
                 <li>
-                  <a title="Github" href="{{profile.social_github}}" target="_blank"><i class="fa-brands fa-github fa-2xl"></i></a>
+                  <a title="Github" href="{{ profile.social_github }}" target="_blank"><i class="fa-brands fa-github fa-2xl"></i></a>
                 </li>
                 {% endif %}
 <!--                <li>-->
@@ -24,22 +24,22 @@
 <!--                </li>-->
                 {% if profile.social_twitter %}
                   <li>
-                    <a title="Twitter" href="{{profile.social_twitter}}" target="_blank"><i class="fa-brands fa-x-twitter fa-2xl"></i></a>
+                    <a title="Twitter" href="{{ profile.social_twitter }}" target="_blank"><i class="fa-brands fa-x-twitter fa-2xl"></i></a>
                   </li>
                 {% endif %}
                 {% if profile.social_youtube %}
                   <li>
-                    <a title="Youtube" href="{{profile.social_youtube}}" target="_blank"><i class="fa-brands fa-youtube fa-2xl"></i></a>
+                    <a title="Youtube" href="{{ profile.social_youtube }}" target="_blank"><i class="fa-brands fa-youtube fa-2xl"></i></a>
                  </li>
                 {% endif %}
                 {% if profile.social_linkedin %}
                   <li>
-                    <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank"><i class="fa-brands fa-linkedin fa-2xl"></i></a>
+                    <a title="LinkedIn" href="{{ profile.social_linkedin }}" target="_blank"><i class="fa-brands fa-linkedin fa-2xl"></i></a>
                   </li>
                 {% endif %}
                 {% if profile.social_website %}
                   <li>
-                    <a title="Personal Website" href="{{profile.social_website}}" target="_blank"><i class="fa-solid fa-globe fa-2xl"></i></a>
+                    <a title="Personal Website" href="{{ profile.social_website }}" target="_blank"><i class="fa-solid fa-globe fa-2xl"></i></a>
                   </li>
                 {% endif %}
               </ul>
@@ -60,9 +60,9 @@
 
             {% for skill in description_skills %}
               <div class="devSkill">
-                <h4 class="devSkill__title">{{skill.name}}</h4>
+                <h4 class="devSkill__title">{{ skill.name }}</h4>
                 <p class="devSkill__info">
-                  {{skill.description}}
+                  {{ skill.description }}
                 </p>
               </div>
             {% endfor %}
@@ -72,7 +72,7 @@
 
             {% for skill in other_skills %}
               <span class="tag tag--pill tag--sub tag--lg">
-                <small>{{skill.name}}</small>
+                <small>{{ skill.name }}</small>
               </span>
             {% endfor %}
 
@@ -87,18 +87,18 @@
               <div class="column">
                 <div class="card project">
                   <a href="{% url 'project-page' project.id  %}" class="project">
-                    <img class="project__thumbnail" src="{{project.featured_image.url}}" alt="project thumbnail" />
+                    <img class="project__thumbnail" src="{{ project.featured_image.url }}" alt="project thumbnail" />
                     <div class="card__body">
-                      <h3 class="project__title">{{project.title}}</h3>
-                      <p><a class="project__author" href="{% url 'user-profile' profile.id %}">By {{profile.name}}</a></p>
+                      <h3 class="project__title">{{ project.title }}</h3>
+                      <p><a class="project__author" href="{% url 'user-profile' profile.id %}">By {{ profile.name }}</a></p>
                       <p class="project--rating">
-                        <span style="font-weight: bold;">{{project.vote_ratio}}%</span> Postitive
-                        Feedback ({{project.vote_total}} Vote{{project.vote_total|pluralize:"s"}})
+                        <span style="font-weight: bold;">{{ project.vote_ratio }}%</span> Postitive
+                        Feedback ({{ project.vote_total }} Vote{{ project.vote_total|pluralize:"s" }})
                       </p>
                       <div class="project__tags">
                       {% for tag in project.tags.all %}
                         <span class="tag tag--pill tag--main">
-                          <small>{{tag}}</small>
+                          <small>{{ tag }}</small>
                         </span>
                       {% endfor %}
                       </div>
