@@ -1,9 +1,13 @@
 from django.db import models
 from users.models import Profile
 import uuid
+from decimal import Decimal
 
 # Create your models here.
 class Project(models.Model):
+    class Meta:
+        ordering = ['created']
+
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     owner = models.ForeignKey(to=Profile, null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=200)
@@ -19,8 +23,18 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
-    class Meta:
-        ordering = ['created']
+
+    def update_votes(self):
+        reviews = self.review_set.all()
+        up_votes = reviews.filter(value='up').count()
+        total_votes = reviews.count()
+        # Decimal.normalize() removes trailing zeros
+        # So after the calculation is done and the user is redirected,
+        # you won't see something like '50.0% Positive Feedback'
+        ratio = (Decimal(up_votes / total_votes) * 100).normalize()
+        self.vote_total = total_votes
+        self.vote_ratio = ratio
+        self.save()
 
 
 class Review(models.Model):
