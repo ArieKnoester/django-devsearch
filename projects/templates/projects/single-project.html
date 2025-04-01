@@ -44,16 +44,20 @@
               {{ project.vote_ratio }}% Positive Feedback ({{ project.vote_total }} Vote{{ project.vote_total|pluralize:"s" }})
             </h5>
 
+            {% if user.is_authenticated %}
             <form class="form" action="{% url 'project-page' project.id %}" method="POST">
               {% csrf_token %}
               {% for field in form %}
-              <div class="form__field">
-                <label for="formInput#text">{{ field.label }}</label>
-                {{ field }}
-              </div>
+                <div class="form__field">
+                  <label for="formInput#text">{{ field.label }}</label>
+                  {{ field }}
+                </div>
               {% endfor %}
               <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
             </form>
+            {% else %}
+              <p class="project--rating">Log in to comment</p>
+            {% endif %}
 
             <div class="commentList">
             {% for review in project.review_set.all %}
