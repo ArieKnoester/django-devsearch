@@ -26,6 +26,13 @@ def all_projects_page(request):
 
 def project_page(request, pk):
     project = Project.objects.get(id=pk)
+
+    # This needs to be recalculated every time the page if viewed.
+    # If an admin deletes a review from the admin page,
+    # the vote cout and ratio does not get updated until another user submits
+    # a review.
+    project.update_votes()
+
     tags = project.tags.all()
     form = ReviewForm()
     context = {
@@ -34,16 +41,18 @@ def project_page(request, pk):
         'form': form,
     }
 
-    # Need to update project vote count and ratio
+    # This needs error handling so that an unauthenticated user
+    # can not submit a review. The site will error otherwise when it
+    # tries to set the 'owner'.
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         review = form.save(commit=False)
         review.project = project
         review.owner = request.user.profile
         review.save()
-
+        project.update_votes()
         messages.success(request, message='Your review was successfully submitted.')
-
+        return redirect('project-page', pk=project.id)
 
     return render(
         request,
