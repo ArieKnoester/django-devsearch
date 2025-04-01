@@ -535,10 +535,12 @@ img {
   border-top: 2px solid var(--color-light);
 }
 
+/* Commenting this out fixes labels not showing in Review form
 .comments .form label {
   position: absolute;
   margin: -9999px;
 }
+*/
 
 .commentList {
   margin: 3rem 0;
