@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Project
-from .forms import ProjectForm
+from .forms import ProjectForm, ReviewForm
 from .utils import search_projects, paginate_projects
 
 
@@ -26,9 +26,11 @@ def all_projects_page(request):
 def project_page(request, pk):
     project = Project.objects.get(id=pk)
     tags = project.tags.all()
+    form = ReviewForm()
     context = {
         'project': project,
-        'tags': tags
+        'tags': tags,
+        'form': form,
     }
     return render(
         request,
