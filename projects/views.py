@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Project
 from .forms import ProjectForm, ReviewForm
 from .utils import search_projects, paginate_projects
@@ -32,6 +33,18 @@ def project_page(request, pk):
         'tags': tags,
         'form': form,
     }
+
+    # Need to update project vote count and ratio
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        review = form.save(commit=False)
+        review.project = project
+        review.owner = request.user.profile
+        review.save()
+
+        messages.success(request, message='Your review was successfully submitted.')
+
+
     return render(
         request,
         template_name='projects/single-project.html',
