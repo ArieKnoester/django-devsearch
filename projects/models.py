@@ -41,6 +41,8 @@ class Project(models.Model):
 
 
 class Review(models.Model):
+    class Meta:
+        unique_together = [['owner', 'project']]
 
     VOTE_TYPE = (
         ('up', 'Up Vote'),
@@ -56,9 +58,6 @@ class Review(models.Model):
 
     def __str__(self):
         return self.value
-
-    class Meta:
-        unique_together = [['owner', 'project']]
 
 
 class Tag(models.Model):
