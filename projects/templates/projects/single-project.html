@@ -2,7 +2,6 @@
 
 {% block content %}
 
-
 <!-- Main Section -->
   <main class="singleProject my-md">
     <div class="container">
@@ -44,7 +43,7 @@
               {{ project.vote_ratio }}% Positive Feedback ({{ project.vote_total }} Vote{{ project.vote_total|pluralize:"s" }})
             </h5>
 
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and user.profile.id != project.owner.id %}
             <form class="form" action="{% url 'project-page' project.id %}" method="POST">
               {% csrf_token %}
               {% for field in form %}
@@ -55,8 +54,10 @@
               {% endfor %}
               <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
             </form>
+            {% elif user.profile.id == project.owner.id %}
+            <p class="project--rating"><strong>You cannot review your own projects.</strong></p>
             {% else %}
-              <p class="project--rating">Log in to comment</p>
+            <p class="project--rating"><strong>Log in to submit project reviews.</strong></p>
             {% endif %}
 
             <div class="commentList">
