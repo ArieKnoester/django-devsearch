@@ -11,3 +11,4 @@ A course project introducing the basics of Django. UIkit and static elements wer
 
 - After handling admin deleted reviews, logic is needed in Project model's update_votes method so that 
 division by zero is avoided for projects that have no votes.
+- Ensure a user cannot vote on their own projects
