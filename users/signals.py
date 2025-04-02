@@ -29,6 +29,8 @@ def update_user(sender, instance, created, **kwargs):
         user.save()
 
 
+# NOT USED!!!!
+# See comment on 'post_delete' signal below.
 def delete_user(sender, instance, **kwargs):
     user = instance.user
     user.delete()
@@ -37,4 +39,9 @@ def delete_user(sender, instance, **kwargs):
 # Demonstrates how to connect a signal to a function instead of using a decorator.
 post_save.connect(receiver=create_profile, sender=User)
 post_save.connect(receiver=update_user, sender=Profile)
+
+# This signal was created by the instructor, but causes a circular logic issue.
+# If an admin deletes a profile from the admin page, the function called here
+# will also delete the user. However, if a user is deleted, the Profile model
+# is set to 'on_delete=models.CASCADE' and will try to delete a Profile that no longer exists.
 # post_delete.connect(receiver=delete_user, sender=Profile)

@@ -8,7 +8,6 @@ from .models import Profile
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 
 
-# Create your views here.
 def login_user(request):
 
     if request.user.is_authenticated:

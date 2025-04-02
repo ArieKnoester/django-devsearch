@@ -18,6 +18,7 @@ def paginate_profiles(request, profiles, per_page):
     return page_range, profiles
 
 
+# NOT USED !!!
 # Instructor's way of limiting the number of page buttons displayed
 # if the number of pages is large. While this does work, it might be
 # better to use Paginator.get_elided_page_range instead.

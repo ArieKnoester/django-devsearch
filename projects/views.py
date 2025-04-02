@@ -6,7 +6,6 @@ from .forms import ProjectForm, ReviewForm
 from .utils import search_projects, paginate_projects
 
 
-# Create your views here.
 def all_projects_page(request):
     projects, search_query = search_projects(request)
     page_range, projects = paginate_projects(request, projects, per_page=6)
@@ -29,7 +28,7 @@ def project_page(request, pk):
 
     # This needs to be recalculated every time the page if viewed.
     # If an admin deletes a review from the admin page,
-    # the vote cout and ratio does not get updated until another user submits
+    # the vote count and ratio does not get updated until another user submits
     # a review.
     project.update_votes()
 
@@ -41,9 +40,6 @@ def project_page(request, pk):
         'form': form,
     }
 
-    # This needs error handling so that an unauthenticated user
-    # can not submit a review. The site will error otherwise when it
-    # tries to set the 'owner'.
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         review = form.save(commit=False)

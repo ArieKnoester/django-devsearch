@@ -3,7 +3,7 @@ from users.models import Profile
 import uuid
 from decimal import Decimal
 
-# Create your models here.
+
 class Project(models.Model):
     class Meta:
         ordering = ['created']
@@ -31,8 +31,8 @@ class Project(models.Model):
 
         # Prevents division by zero for projects with no votes
         if total_votes > 0:
-            # Decimal.normalize() removes trailing zeros
-            # So after the calculation is done and the user is redirected,
+            # Decimal.normalize() removes trailing zeros.
+            # After the calculation is done and the user is redirected,
             # you won't see something like '50.0% Positive Feedback'
             ratio = (Decimal(up_votes / total_votes) * 100).normalize()
             self.vote_total = total_votes
