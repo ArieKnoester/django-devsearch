@@ -24,6 +24,12 @@ class Project(models.Model):
         return self.title
 
 
+    @property
+    def reviewers(self):
+        query_set = self.review_set.all().values_list('owner__id', flat=True)
+        return query_set
+
+
     def update_votes(self):
         reviews = self.review_set.all()
         up_votes = reviews.filter(value='up').count()
