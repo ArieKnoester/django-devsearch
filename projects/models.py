@@ -6,7 +6,7 @@ from decimal import Decimal
 
 class Project(models.Model):
     class Meta:
-        ordering = ['created']
+        ordering = ['-vote_ratio']
 
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     owner = models.ForeignKey(to=Profile, null=True, blank=True, on_delete=models.SET_NULL)
