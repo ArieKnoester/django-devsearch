@@ -25,7 +25,7 @@ def login_user(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user=user)
-                return redirect('all-profiles')
+                return redirect(request.GET.get('next', 'all-profiles'))
             else:
                 messages.error(request, message="Username or password is incorrect.")
 

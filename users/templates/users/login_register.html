@@ -55,7 +55,9 @@
           <p>Hello Developer, Welcome Back!</p>
         </div>
 
-        <form action="{% url 'login' %}" method="POST" class="form auth__form">
+        <!-- action should be left blank here so that a '?next=some_url' can be passed along in a GET request.
+             See user/views.py login function -->
+        <form action="" method="POST" class="form auth__form">
           {% csrf_token %}
           <!-- Input:Username -->
           <div class="form__field">
