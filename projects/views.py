@@ -26,7 +26,7 @@ def all_projects_page(request):
 def project_page(request, pk):
     project = Project.objects.get(id=pk)
 
-    # This needs to be recalculated every time the page if viewed.
+    # This needs to be recalculated every time the page is viewed.
     # If an admin deletes a review from the admin page,
     # the vote count and ratio does not get updated until another user submits
     # a review.
