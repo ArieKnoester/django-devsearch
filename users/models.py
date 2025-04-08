@@ -37,7 +37,7 @@ class Skill(models.Model):
         return str(self.name)
 
 
-class Messsage(models.Model):
+class Message(models.Model):
     class Meta:
         ordering = ['is_read', '-created']
 
