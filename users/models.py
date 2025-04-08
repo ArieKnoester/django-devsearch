@@ -44,6 +44,7 @@ class Message(models.Model):
 
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     sender = ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
+    # Give the recipient a 'related_name' and use this name to query for Messages related to the Profile.
     recipient = ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True, related_name='messages')
     name = models.CharField(max_length=200, null=True, blank=True)
     email = models.EmailField(max_length=200, null=True, blank=True)
