@@ -192,3 +192,14 @@ def inbox(request):
     }
 
     return render(request, template_name='users/inbox.html', context=context)
+
+
+@login_required(login_url='login')
+def view_message(request, pk):
+    profile = request.user.profile
+    profile_message = profile.messages.get(id=pk)
+    if not profile_message.is_read:
+        profile_message.is_read = True
+        profile_message.save()
+    context = {'profile_message': profile_message}
+    return render(request, template_name='users/message.html', context=context)
