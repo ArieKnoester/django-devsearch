@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .utils import search_profiles, paginate_profiles
-from .models import Profile
+from .models import Profile, Message
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 
 
@@ -177,3 +177,18 @@ def delete_skill(request, pk):
             return redirect('account')
 
     return render(request, template_name='delete-template.html', context=context)
+
+
+@login_required(login_url='login')
+def inbox(request):
+    profile =  request.user.profile
+    # messages is the 'related_name' we gave the foreign key in the Messages model
+    # this is why we use 'profile.messages.all()' instead of profile.messages_set.all()
+    profile_messages = profile.messages.all()
+    unread_count = profile_messages.filter(is_read=False).count()
+    context = {
+        'profile_messages': profile_messages,
+        'unread_count': unread_count
+    }
+
+    return render(request, template_name='users/inbox.html', context=context)
