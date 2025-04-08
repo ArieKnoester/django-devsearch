@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .utils import search_profiles, paginate_profiles
-from .models import Profile, Message
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .models import Profile
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 
 
 def login_user(request):
@@ -203,3 +203,29 @@ def view_message(request, pk):
         profile_message.save()
     context = {'profile_message': profile_message}
     return render(request, template_name='users/message.html', context=context)
+
+
+def create_message(request, pk):
+    form = MessageForm()
+    recipient = Profile.objects.get(id=pk)
+    context = {
+        'form': form,
+        'recipient': recipient,
+    }
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            profile_message = form.save(commit=False)
+            profile_message.recipient = Profile.objects.get(id=pk)
+
+            if request.user.is_authenticated:
+                profile_message.sender = request.user.profile
+                profile_message.name = request.user.profile.name
+                profile_message.email = request.user.profile.email
+
+            profile_message.save()
+            messages.success(request, message='Your message was sent.')
+            return redirect('user-profile', pk)
+
+    return render(request, template_name='users/message_form.html', context=context)
