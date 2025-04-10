@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+load_dotenv()
 
-from django.conf.global_settings import STATICFILES_DIRS, MEDIA_ROOT
+from django.conf.global_settings import STATICFILES_DIRS, MEDIA_ROOT, EMAIL_BACKEND, EMAIL_HOST, EMAIL_USE_TLS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -120,6 +122,17 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
+# Send emails. Added during the course. At this point in the course, the instructor added credentials
+# in this file as it's still in development and the course does not cover using git. Since I am using git,
+# I decided to go ahead with this lesson, but used pyton-dotenv imported above to set these variables.
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_APP_PASSWORD')
 
 
 # Static files (CSS, JavaScript, Images)

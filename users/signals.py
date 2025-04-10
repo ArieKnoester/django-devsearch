@@ -2,6 +2,8 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
+from django.core.mail import send_mail
+from django.conf import settings  # Get the .env variables for sending emails.
 
 
 # Demonstrates how to connect a signal to a function using a decorator.
@@ -15,6 +17,18 @@ def create_profile(sender, instance, created, **kwargs):
             username=user.username,
             email=user.email,
             name=user.first_name
+        )
+
+        subject = 'Welcome to DevSearch!'
+        body = f"Thank you, {profile.name} for signing up. We are glad you're here."
+        recipient_email = profile.email
+
+        send_mail(
+            subject=subject,
+            message=body,
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[recipient_email],
+            fail_silently=False,
         )
 
 
