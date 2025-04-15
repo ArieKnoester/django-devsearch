@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -25,10 +26,14 @@ urlpatterns = [
     path('projects/', include('projects.urls')),
     path('', include('users.urls')),
 
+    path('password-reset/', auth_views.PasswordResetView.as_view(template_name='password-reset.html'), name='reset_password'),
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password-reset-done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password-reset-confirm.html'), name='password_reset_confirm'),
+    path('reset/complete/', auth_views.PasswordResetCompleteView.as_view(template_name='password-reset-complete.html'), name='password_reset_complete'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Example of how to point to the static file directory after running 'colloetstatic'
+# Example of how to point to the static file directory after running 'collectstatic'
 # in PRODUCTION (debug mode turned off.) Refer to settings.py.
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
