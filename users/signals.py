@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings  # Get the .env variables for sending emails.
 
 
@@ -20,16 +20,30 @@ def create_profile(sender, instance, created, **kwargs):
         )
 
         subject = 'Welcome to DevSearch!'
-        body = f"Thank you, {profile.name} for signing up. We are glad you're here."
+        from_email = settings.EMAIL_HOST_USER
         recipient_email = profile.email
-
-        send_mail(
+        text_content = f"Thank you, {profile.name} for signing up. We are glad you're here."
+        html_content = f"""
+                <html>
+                  <head></head>
+                  <body>
+                    <p>
+                      Thank you, {profile.name} for signing up. We are glad you're here.
+                    </p>
+                  </body>
+                </html>
+                """
+        msg = EmailMultiAlternatives(
             subject=subject,
-            message=body,
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[recipient_email],
-            fail_silently=False,
+            body=text_content,
+            from_email=from_email,
+            to=[recipient_email]
         )
+        msg.attach_alternative(
+            content=html_content,
+            mimetype="text/html"
+        )
+        msg.send()
 
 
 def update_user(sender, instance, created, **kwargs):
