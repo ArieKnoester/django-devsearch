@@ -5,7 +5,8 @@ Work in progress
 A course project introducing the basics of Django. UIkit and static elements were provided by the course.
 
 ## TODOs:
-- Password reset.
+- ~~Password reset.~~
+  - Need to figure out how to display form errors when using custom html templates for OOTB Django password reset views.
 - ~~Welcome email.~~
   - ~~While this is technically working using send_mail from django.core.mail. It's getting flagged as spam.
     Try using an EmailMessage object instead. 
